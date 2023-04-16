@@ -51,3 +51,8 @@ GET http://localhost:3000/jobSearchByField?criteria=Test&field=company
 
 ####
 
+
+GET http://localhost:3000/jobSearchByField?criteria=Test&field=jobtitle
+
+####
+

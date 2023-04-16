@@ -58,19 +58,19 @@ app.get('/jobSearch/:searchCriteria', async (req,res) => {
 
 //example.com/books/123  req.params.id  // url parms
 //example.com/books/:id  req.params
-// example.com/books?criteria=123&field=id  req.query.criteria,req.query.field  // query string 
+//example.com/books?criteria=123&field=id  req.query.criteria,req.query.field  // query string 
 
 // get specific record(s) by search criteria  (READ in CRUD)
-app.get('/jobSearchByField', async (req,res) => {	  // STILL DOES NOT WORK YET
+app.get('/jobSearchByField', async (req,res) => {	  
 	let sc = `%${ req.query.criteria.toLowerCase() }%`;		
 	let sf = `${ req.query.field }`;	
 	
-	console.log(sc);
-	console.log(sf);
+	console.log(`searching for string:${sc} in field:${sf}`);	
 
 	const result = await sql`
 	  select * from jobs 
-	  where lower(${sf}) like ${sc} `;
+	  where lower(${sql(sf)}) like ${sc} `;  // added sql(); see docs https://www.npmjs.com/package/postgres#building-queries
+
 	console.log(result);
 	let data = {result};
 	res.json(data);

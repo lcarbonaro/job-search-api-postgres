@@ -43,14 +43,40 @@ app.get('/jobs/:id', async (req,res) => {
 
 // get specific record(s) by search criteria  (READ in CRUD)
 app.get('/jobSearch/:searchCriteria', async (req,res) => {	
-	let sc = `%${ req.params.searchCriteria.toLowerCase() }%`;	
+	let sc = `%${ req.params.searchCriteria.toLowerCase() }%`;		
 	const result = await sql`
 	  select * from jobs 
-	  where lower(jobtitle) like ${sc}`;
+	  where (
+		lower(jobtitle) like ${sc} or
+		lower(jobcategory) like ${sc} or
+		lower(region) like ${sc} or
+		lower(company) like ${sc} )`;
 	console.log(result);
 	let data = {result};
 	res.json(data);
 });
+
+//example.com/books/123  req.params.id  // url parms
+//example.com/books/:id  req.params
+// example.com/books?criteria=123&field=id  req.query.criteria,req.query.field  // query string 
+
+// get specific record(s) by search criteria  (READ in CRUD)
+app.get('/jobSearchByField', async (req,res) => {	  // STILL DOES NOT WORK YET
+	let sc = `%${ req.query.criteria.toLowerCase() }%`;		
+	let sf = `${ req.query.field }`;	
+	
+	console.log(sc);
+	console.log(sf);
+
+	const result = await sql`
+	  select * from jobs 
+	  where lower(${sf}) like ${sc} `;
+	console.log(result);
+	let data = {result};
+	res.json(data);
+});
+
+
 
 // insert a new record CREATE in CRUD
 app.post('/jobs', async (req,res) => {

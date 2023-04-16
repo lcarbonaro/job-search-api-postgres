@@ -21,10 +21,10 @@ content-type: application/json
 ###
 
 
-PUT http://localhost:3000/jobs/5
+PUT http://localhost:3000/jobs/7
 content-type: application/json
 
-{"jobTitle":"DevOps Engineer","company":"Roncal Ltd","region":"London","jobCategory":"IT"}
+{"jobTitle":"UX Engineer","company":"Test Ltd","region":"London","jobCategory":"IT"}
 
 ###
 
@@ -33,6 +33,21 @@ DELETE http://localhost:3000/jobs/5
 ####
 
 
-GET http://localhost:3000/jobSearch/cyc
+GET http://localhost:3000/jobSearch/test
 
 ####
+
+GET https://api.thecatapi.com/v1/images/search
+
+###
+
+
+GET http://localhost:3000/jobSearch/test/jobtitle
+
+####
+
+
+GET http://localhost:3000/jobSearchByField?criteria=Test&field=company
+
+####
+
